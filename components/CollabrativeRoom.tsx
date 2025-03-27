@@ -12,14 +12,17 @@ import {
 import { Editor } from "@/components/editor/Editor";
 import Header from "@/components/Header";
 import Loader from "./Loader";
+import ActiveCollabrator from "./ActiveCollabrator";
 
-const CollabrativeRoom = () => {
+const CollabrativeRoom = ({roomId,roomMetaData}:{roomId:string,roomMetaData:string}) => {
   return (
     <div>
-      <RoomProvider id="my-room">
+      <RoomProvider id={roomId}>
         <ClientSideSuspense fallback={<Loader />}>
           <Header>
             <p className="text-white">Untitled</p>
+            <div className="flex w-full flex-1 justify-end gap-2 sm:gap-3">
+              <ActiveCollabrator />
             <div className="flex gap-2">
               <SignedOut>
                 <div className="bg-white cursor-pointer p-2 px-5 text-black rounded-full">
@@ -32,6 +35,7 @@ const CollabrativeRoom = () => {
               <SignedIn>
                 <UserButton />
               </SignedIn>
+            </div>
             </div>
           </Header>
           <Editor />

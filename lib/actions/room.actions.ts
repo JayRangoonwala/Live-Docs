@@ -5,6 +5,7 @@ import { liveblocks } from "../liveblocks";
 import { RoomAccesses } from "@liveblocks/node";
 import { revalidatePath } from "next/cache";
 import { parseStringify } from "../utils";
+import { redirect } from "next/navigation";
 
 type CreateDocumentParams = {
     userId: string;
@@ -21,21 +22,46 @@ export const createDocument = async ({ userId, email }: CreateDocumentParams) =>
             title: "untitled"
         }
 
-        const usersAccesses:RoomAccesses = {
-            [email] : ['room:write']
+        const usersAccesses: RoomAccesses = {
+            [email]: ['room:write']
         }
 
         const room = await liveblocks.createRoom(roomId, {
-           metadata,
-           usersAccesses,
-           defaultAccesses:[],
+            metadata:metadata,
+            usersAccesses:usersAccesses,
+            defaultAccesses: ['room:write'],
         });
 
+        if(!room){
+            throw new Error("Error Generated While Creating room");
+        }
+        console.log("Room created :",room);
         revalidatePath('/');
 
         return parseStringify(room);
 
     } catch (error) {
         console.log("Error Generate while Creating Room", error);
+    }
+}
+
+export const getDocument = async ({ roomId, userId }: { roomId: string, userId: string }) => {
+    try {
+        console.log("roomId,userid:",roomId,userId)
+        const room = await liveblocks.getRoom(roomId);
+
+        if(!room){
+            throw new Error("No Room in getDocumeent");
+        }
+        console.log("Fetching room",room);
+
+        // const hasAccess = Object.keys(room.usersAccesses).includes(userId);
+
+        // if (!hasAccess) {
+        //     throw new Error("You Have No Access to the room");
+        // }
+        return parseStringify(room);
+    } catch (error) {
+        console.log("Error Happened while getting Room",error);
     }
 }

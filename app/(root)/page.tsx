@@ -6,11 +6,10 @@ import AddDocumentBtn from "@/components/AddDocumentBtn";
 import { currentUser } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
 
-export default async function Home () {
-
+export default async function Home() {
   const ClerkUser = await currentUser();
 
-  if(!ClerkUser) redirect("/sign-in");
+  if (!ClerkUser) redirect("/sign-in");
 
   const documents = [];
 
@@ -29,22 +28,22 @@ export default async function Home () {
           </SignedOut>
         </div>
       </Header>
-        {documents.length > 0 ? (
-          <div></div>
-        ) : (
-          <div className="flex w-full justify-center items-center max-w-[730px] flex-col gap-5 bg-[#0e1b32] rounded-lg p-5">
-            <Image
-              src="/assets/icons/doc.svg"
-              alt="Document Image"
-              width={35}
-              height={35}
-            />
-            <AddDocumentBtn 
-              userId={ClerkUser.id}
-              userEmail={ClerkUser.emailAddresses[0].emailAddress}
-            />
-          </div>
-        )}
+      {documents.length > 0 ? (
+        <div></div>
+      ) : (
+        <div className="flex w-full justify-center items-center max-w-[730px] flex-col gap-5 bg-[#0e1b32] rounded-lg p-5">
+          <Image
+            src="/assets/icons/doc.svg"
+            alt="Document Image"
+            width={35}
+            height={35}
+          />
+          <AddDocumentBtn
+            userId={ClerkUser.id}
+            userEmail={ClerkUser.emailAddresses[0].emailAddress}
+          />
+        </div>
+      )}
     </main>
   );
 }
