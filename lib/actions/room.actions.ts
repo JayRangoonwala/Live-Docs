@@ -6,6 +6,7 @@ import { RoomAccesses } from "@liveblocks/node";
 import { revalidatePath } from "next/cache";
 import { parseStringify } from "../utils";
 import { redirect } from "next/navigation";
+import { stringify } from "querystring";
 
 type CreateDocumentParams = {
     userId: string;
@@ -27,15 +28,15 @@ export const createDocument = async ({ userId, email }: CreateDocumentParams) =>
         }
 
         const room = await liveblocks.createRoom(roomId, {
-            metadata:metadata,
-            usersAccesses:usersAccesses,
+            metadata: metadata,
+            usersAccesses: usersAccesses,
             defaultAccesses: ['room:write'],
         });
 
-        if(!room){
+        if (!room) {
             throw new Error("Error Generated While Creating room");
         }
-        console.log("Room created :",room);
+        console.log("Room created :", room);
         revalidatePath('/');
 
         return parseStringify(room);
@@ -47,13 +48,13 @@ export const createDocument = async ({ userId, email }: CreateDocumentParams) =>
 
 export const getDocument = async ({ roomId, userId }: { roomId: string, userId: string }) => {
     try {
-        console.log("roomId,userid:",roomId,userId)
+        console.log("roomId,userid:", roomId, userId)
         const room = await liveblocks.getRoom(roomId);
 
-        if(!room){
+        if (!room) {
             throw new Error("No Room in getDocumeent");
         }
-        console.log("Fetching room",room);
+        console.log("Fetching room", room);
 
         // const hasAccess = Object.keys(room.usersAccesses).includes(userId);
 
@@ -62,6 +63,20 @@ export const getDocument = async ({ roomId, userId }: { roomId: string, userId: 
         // }
         return parseStringify(room);
     } catch (error) {
-        console.log("Error Happened while getting Room",error);
+        console.log("Error Happened while getting Room", error);
+    }
+}
+
+export const updateDocument = async (roomId: string, title: string) => {
+    try {
+        const updatedDocument = await liveblocks.updateRoom(roomId, {
+            metadata: {
+                title
+            }
+        })
+        revalidatePath(`/documents/${roomId}`);
+        return parseStringify(updatedDocument);
+    } catch (err) {
+        console.log("Error While Updating Doc", err);
     }
 }

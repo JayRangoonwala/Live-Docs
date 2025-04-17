@@ -8,23 +8,20 @@ const ActiveCollabrator = () => {
 
     console.log("others:",others);
 
-    console.log(others);
-    const collabrators = others.map((other) => {
-        other.info;
-    })
-
+    const collabrators = others.map((other) => other.info);
+    console.log(collabrators);
   return (
-    <ul className='hidden items-center justify-end -space-x-3 overflow-hidden sm:flex;'>
+    <ul className='flex w-fit items-center justify-end -space-x-2 overflow-hidden sm:flex'>
         {
-        collabrators.map(({id,avatar,name,color}:any) => (
+        collabrators.map(({id,avatar,name,color}) => (
             <li key={id}>
                 <Image
                 src={avatar}
                 alt={name}
                 height={100}
                 width={100}
-                className='inline-block size-8 rounded-full ring-2'
-                style={{border:`2px solid ${color}`}}
+                className='inline-block size-6 rounded-full ring-2'
+                style={{border:`1px solid ${color}`}}
                 />
             </li>
         ))

@@ -13,25 +13,25 @@ type DocumentProps = {
   params: { id: string };
 };
 
-const Document = async({ params }: DocumentProps) => {
+const Document = async({ params:{id} }: DocumentProps) => {
   const user = await currentUser();
 
   if (!user) {
     redirect("/sign-in");
   }
    // ✅ Await params
-   console.log(params.id);
-  const roomId = await params.id;
+  //  const roomId = params?.id;
+  //  console.log(params?.id);
 
-  if (!roomId) {
+  if (!id) {
     console.error("🚨 Room ID is missing in URL.");
     redirect("/");
   }
 
-  console.log("Room ID from params:", roomId);
+  console.log("Room ID from params:", id);
 
   const room = await getDocument({
-    roomId,
+    roomId:id,
     userId: user.emailAddresses[0].emailAddress,
   });
 
@@ -42,7 +42,7 @@ const Document = async({ params }: DocumentProps) => {
 
   return (
     <div>
-      <CollabrativeRoom roomId={roomId} roomMetaData={room.metadata} />
+      <CollabrativeRoom roomId={id} roomMetaData={room.metadata} />
     </div>
   );
 };

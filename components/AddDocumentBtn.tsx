@@ -5,13 +5,14 @@ import React from "react";
 import { Button } from "./ui/button";
 import { createDocument } from "@/lib/actions/room.actions";
 import { useRouter } from "next/navigation";
+// import { router } from "@/lib/handleClientError";
 
 type AddDocumentType = {
   userId: string;
   userEmail: string;
 };
 
-const AddDocumentBtn = async ({ userId, userEmail }: AddDocumentType) => {
+const AddDocumentBtn = ({ userId, userEmail }: AddDocumentType) => {
   const router = useRouter();
 
   const AddDocumentHandler = async() => {
