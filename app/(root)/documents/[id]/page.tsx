@@ -2,6 +2,7 @@
 
 import CollabrativeRoom from "@/components/CollabrativeRoom";
 import { getDocument } from "@/lib/actions/room.actions";
+import { getClerkusers } from "@/lib/actions/user.action";
 import { currentUser } from "@clerk/nextjs/server";
 import "@clerk/themes";
 import { redirect } from "next/navigation";
@@ -11,6 +12,18 @@ import React, { use } from "react";
 // Correct Type for Next.js Route Params
 type DocumentProps = {
   params: { id: string };
+};
+
+type UserType = "creator" | "editor" | "viewer";
+
+
+type User = {
+  id: string;
+  name: string;
+  email: string;
+  avatar: string;
+  color: string;
+  userType?: UserType;
 };
 
 const Document = async({ params:{id} }: DocumentProps) => {
@@ -40,9 +53,20 @@ const Document = async({ params:{id} }: DocumentProps) => {
     redirect("/");
   }
 
+  const userIds = Object.keys(room.usersAccesses);
+  const users = await getClerkusers({userIds});
+
+  const userData = users.map((user: User) => ({
+    ...user,
+    userType: room.usersAccesses[user.email]?.includes('room:write') ? 'editor' : 'viewer'
+  }))
+
+  const currentUserType = room.usersAccesses[user.emailAddresses[0].emailAddress]?.includes('room:write') ? 
+    'editor' : 'viewer'
+
   return (
     <div>
-      <CollabrativeRoom roomId={id} roomMetaData={room.metadata} />
+      <CollabrativeRoom roomId={id} roomMetaData={room.metadata} users={userData} currentUserType={currentUserType}/>
     </div>
   );
 };

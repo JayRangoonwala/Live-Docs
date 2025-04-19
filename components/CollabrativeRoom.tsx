@@ -22,15 +22,29 @@ type RoomMetadata = {
   email: string;
   title: string;
 };
+type UserType = "creator" | "editor" | "viewer";
+
+
+type User = {
+  id: string;
+  name: string;
+  email: string;
+  avatar: string;
+  color: string;
+  userType?: UserType;
+};
 
 const CollabrativeRoom = ({
   roomId,
   roomMetaData,
+  users,
+  currentUserType
 }: {
   roomId: string;
   roomMetaData: RoomMetadata;
+  users: User[];
+  currentUserType: UserType;
 }) => {
-  const currentUserType = "editor";
 
   const [editing, setEditing] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -136,7 +150,7 @@ const CollabrativeRoom = ({
               </div>
             </div>
           </Header>
-          <Editor />
+          <Editor roomId={roomId} currentUserType={currentUserType}/>
         </div>
         </ClientSideSuspense>
       </RoomProvider>
