@@ -24,7 +24,7 @@ function Placeholder() {
 }
 type UserType = "creator" | "editor" | "viewer";
 
-export function Editor({roomId , currentUserType }:{roomId:string , currentUserType:UserType}) {
+export function Editor({currentUserType }:{ currentUserType:UserType}) {
 
   const {threads} = useThreads();
 

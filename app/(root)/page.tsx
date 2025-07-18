@@ -9,6 +9,14 @@ import { getDocuments } from "@/lib/actions/room.actions";
 import Link from "next/link";
 import { dateConverter } from "@/lib/utils";
 
+interface Document {
+  id:string,
+  metadata:{
+    title:string,
+  },
+  createdAt:string,
+}
+
 export default async function Home() {
   const ClerkUser = await currentUser();
 
@@ -42,7 +50,7 @@ export default async function Home() {
           </div>
           <ul className="flex w-full max-w-[730px] flex-col gap-5">
             {
-              roomDocuments.data.map((document : any) => (
+              roomDocuments.data.map((document:Document) => (
                 <li key={document.id} className="flex items-center justify-between gap-4 rounded-lg bg-[url(/assets/images/doc.png)] bg-cover p-5 shadow-xl">
                   <Link href={`/documents/${document.id}`} className="flex flex-1 items-center gap-4">
                     <div className="hidden rounded-md p-2 bg-[#2E3D5B] sm:block">

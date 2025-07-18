@@ -7,11 +7,11 @@ import { currentUser } from "@clerk/nextjs/server";
 import "@clerk/themes";
 import { redirect } from "next/navigation";
 
-import React, { use } from "react";
+import React from "react";
 
 // Correct Type for Next.js Route Params
 type DocumentProps = {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 };
 
 type UserType = "creator" | "editor" | "viewer";
@@ -26,7 +26,7 @@ type User = {
   userType?: UserType;
 };
 
-const Document = async({ params:{id} }: DocumentProps) => {
+const Document = async({ params }: DocumentProps) => {
   const user = await currentUser();
 
   if (!user) {
@@ -35,13 +35,14 @@ const Document = async({ params:{id} }: DocumentProps) => {
    // ✅ Await params
   //  const roomId = params?.id;
   //  console.log(params?.id);
+  const { id } = await params;
 
   if (!id) {
     console.error("🚨 Room ID is missing in URL.");
     redirect("/");
   }
 
-  console.log("Room ID from params:", id);
+  // console.log("Room ID from params:", id);
 
   const room = await getDocument({
     roomId:id,
@@ -66,7 +67,7 @@ const Document = async({ params:{id} }: DocumentProps) => {
 
   return (
     <div>
-      <CollabrativeRoom roomId={id} roomMetaData={room.metadata} users={userData} currentUserType={currentUserType}/>
+      <CollabrativeRoom roomId={id} roomMetaData={room.metadata} currentUserType={currentUserType}/>
     </div>
   );
 };

@@ -5,8 +5,6 @@ import { liveblocks } from "../liveblocks";
 import { RoomAccesses } from "@liveblocks/node";
 import { revalidatePath } from "next/cache";
 import { parseStringify } from "../utils";
-import { redirect } from "next/navigation";
-import { stringify } from "querystring";
 
 type CreateDocumentParams = {
     userId: string;

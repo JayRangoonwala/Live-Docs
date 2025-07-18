@@ -3,6 +3,7 @@ import "./globals.css";
 import Provider from "./Provider";
 import Header from "@/components/Header";
 
+
 export default function RootLayout({
   children,
 }: Readonly<{

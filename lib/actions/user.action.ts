@@ -5,11 +5,11 @@ import { parseStringify } from "../utils";
 
 export const getClerkusers = async({userIds} : {userIds : string[]}) => {
     try {
-        console.log("userids",userIds);
+        // console.log("userids",userIds);
         const { data } = await clerkClient.users.getUserList({
             emailAddress: userIds
         })
-        console.log("data:",data);
+        // console.log("data:",data);
 
         const users = data.map((user) => ({
             id: user.id,

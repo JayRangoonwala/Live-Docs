@@ -37,12 +37,10 @@ type User = {
 const CollabrativeRoom = ({
   roomId,
   roomMetaData,
-  users,
   currentUserType
 }: {
   roomId: string;
   roomMetaData: RoomMetadata;
-  users: User[];
   currentUserType: UserType;
 }) => {
 
@@ -150,7 +148,7 @@ const CollabrativeRoom = ({
               </div>
             </div>
           </Header>
-          <Editor roomId={roomId} currentUserType={currentUserType}/>
+          <Editor currentUserType={currentUserType}/>
         </div>
         </ClientSideSuspense>
       </RoomProvider>

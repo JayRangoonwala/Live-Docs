@@ -6,10 +6,10 @@ const ActiveCollabrator = () => {
 
     const others = useOthers();
 
-    console.log("others:",others);
+    // console.log("others:",others);
 
     const collabrators = others.map((other) => other.info);
-    console.log(collabrators);
+    // console.log(collabrators);
   return (
     <ul className='flex w-fit items-center justify-end -space-x-2 overflow-hidden sm:flex'>
         {
