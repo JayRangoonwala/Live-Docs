@@ -10,7 +10,7 @@
   },
   "dependencies": {
     "@clerk/clerk-sdk-node": "^5.1.6",
-    "@clerk/nextjs": "^6.12.5",
+    "@clerk/nextjs": "^6.25.4",
     "@clerk/themes": "^2.2.21",
     "@lexical/react": "0.24.0",
     "@liveblocks/client": "^2.23.1",
@@ -26,7 +26,7 @@
     "lexical": "^0.27.2",
     "lucide-react": "^0.479.0",
     "nanoid": "^5.1.3",
-    "next": "15.2.2",
+    "next": "^15.2.3",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "tailwind-merge": "^3.0.2",
